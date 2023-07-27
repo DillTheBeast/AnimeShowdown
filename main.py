@@ -9,6 +9,8 @@ BACKGROUND = (211, 211, 211)
 HEALTH_COLOR = (0, 255, 0)
 BACKGROUND_COLOR = (255, 255, 255)
 BORDER_COLOR = (0, 0, 0)
+color_light = (170,170,170)
+color_dark = (100,100,100)
 imageP = pg.image.load("narutoback.png")
 imageP1 = pg.image.load("hiddenleaftransparent.png")
 imageE = pg.image.load("luffyforward.png")
@@ -17,6 +19,15 @@ scaledImageP = pg.transform.scale(imageP, (150, 240))
 scaledImageP1 = pg.transform.scale(imageP1, (150, 110))
 scaledImageE = pg.transform.scale(imageE, (230, 300))
 scaledImageE1 = pg.transform.scale(imageE1, (200, 120))
+
+buttonFont = pg.font.SysFont("Times New Roman", 50)
+button1 = buttonFont.render('Attack1' , True , WHITE)
+button2 = buttonFont.render('Attack2' , True , WHITE)
+button3 = buttonFont.render('Attack3' , True , WHITE)
+
+buttonClick = False
+done1 = False
+done = False
 
 # Define the health bar parameters
 health_width = 20
@@ -41,13 +52,25 @@ while running:
             pg.quit()
             running = False
 
+        #If clicked setting buttonClick to true
+        if event.type == pg.MOUSEBUTTONDOWN:         
+            #if the mouse is clicked then game starts
+            if WIDTH/2-70 <= mouse[0] <= WIDTH/2+140 and HEIGHT - 60 <= mouse[1] <= HEIGHT+80:
+                buttonClick = True
 
     screen.fill(BACKGROUND)
+    mouse = pg.mouse.get_pos()
     bar_width = 150
     bar_height = 20
     bar_filled_width = int((health / 100) * bar_width)
+    
+    if WIDTH/2-70 <= mouse[0] <= WIDTH/2+200 and HEIGHT - 60 <= mouse[1] <= HEIGHT+100:
+        pg.draw.rect(screen,color_light,[WIDTH/2 - 70,HEIGHT - 60, 200, 100])        
+    else:
+        pg.draw.rect(screen,color_dark,[WIDTH/2 - 70,HEIGHT - 60, 200, 100])
 
-    # Draw the background and border of the health bar
+
+    screen.blit(button1 , (WIDTH/2 - 70 + 35/2,HEIGHT - 60))
     #Naruto
     pg.draw.rect(screen, BORDER_COLOR, (10, 228, bar_width, bar_height))
     pg.draw.rect(screen, BACKGROUND_COLOR, (12, 230, bar_width - 4, bar_height - 4))
